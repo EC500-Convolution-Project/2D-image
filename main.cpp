@@ -11,7 +11,7 @@ using namespace std;
 int main(int argc, char** argv)
 {
 
-	cout << "IT WORKS" << endl;
 	
+
 	return 0;
 }

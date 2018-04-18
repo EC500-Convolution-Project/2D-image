@@ -15,8 +15,8 @@
 #include <string>
 using namespace std;
 
-void circ(double * array, double ** circArray, int N);
-void padder2D(double ** f, double ** h);
-void stacker(double **image, double *stacked, char which);
+void circ(double * array, double ** circArray);
+void padder2D(double ** f, double ** h, double ** fpad, double** hpad);
+void stacker(double ** image, double * stacked, char which);
 
 #endif

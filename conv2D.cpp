@@ -31,7 +31,7 @@ void padder2D(double ** f, double ** h, double ** fpad, double** hpad){
 
 /*
 	*** INPUTS ***
-	which - char signifying if stacking or unstacking
+	which - char signifying if stacking or unstacking (s or u)
 	image - matrix to be row stacked or storage for unstacked image
 	stacked - array to be unstacked or storage for stacked image
 */
