@@ -10,12 +10,102 @@ using namespace std;
 
 /*
 	*** INPUTS ***
-	array is an array of doubles that need to be made circulant (assumes already zero padded)
+	array is an array of N doubles that need to be made circulant (assumes already zero padded)
 	circArray is where the circulant matrix produced will be stored
+	N is # of entries in array
 	
 */
-void circ(double * array, double ** circArray){
+void circ(double * array, double ** circArray, int N){
+	int x,y,dim,dim2;
 
+	//lower triangle
+	for(x=0;x<N;x++){
+		for(y=0;y<N;y++){
+			if(x+y < N){
+				circArray[y+x][y] = array[x];
+			}
+		}
+	}
+
+	//upper triangle, skip middle since already done
+	dim = N-2;
+	dim2 = 0;
+	for(x=0;x<N;x++){
+			
+			for(y=1;y<N;y++){
+				if(y+dim<N && y+dim2<N){
+					circArray[x][y+dim2] = array[y+dim];
+				}
+				dim=dim-2;
+			}
+		
+			dim2++;
+			dim=N-2;
+	}
+	
+}
+
+/*
+	*** INPUTS ***
+	hpad is 2D zero-padded h to make into block circulant matrix
+	circH is storage for block circulant matrix
+	N is # of entries in columns of hpad, since each column a will need to be circ()
+	M is # of columns in hpad
+*/
+void circ2(double ** hpad, double ** circH, int N, int M){
+
+	int i,j,k,x,y,dim,dim2;
+	double * arrayTmp = new double[N];
+	double ** matrixTmp = new double*[N];
+	for(i=0;i<N;i++){
+		matrixTmp[i] = new double[N];
+	}
+
+	//for columns in hpad, create circulant matrices - lower triangle
+	for(i=0;i<M;i++){
+		for(j=0;j<N;j++){
+			arrayTmp[j] = hpad[j][i];
+		}
+
+		circ(arrayTmp,matrixTmp,N); // get circulant of that column
+		
+		//place into correct position
+		for(dim=0;dim<N;dim++){
+			for(x=0;x<N;x++){
+				for(y=0;y<N;y++){
+					if((x+(N*dim)+(i*N)) < (N*M)){
+						circH[(x+(N*dim)+(i*N))][y+(N*dim)] = matrixTmp[x][y];
+					}
+				}
+			}
+		}
+
+
+	}
+
+	//for columns in hpad, create circulant matrices - upper triangle
+	//skip middle portion, since already complete
+	dim2 = 1;
+	for(i=M-1;i>0;i--){
+		for(j=0;j<N;j++){
+			arrayTmp[j] = hpad[j][i];
+		}
+
+		circ(arrayTmp,matrixTmp,N); // get circulant of that column
+		
+		//place into correct position
+		for(dim=dim2;dim<N;dim++){
+			for(x=0;x<N;x++){
+				for(y=0;y<N;y++){
+					if((y+(N*dim2)) < (N*M)){
+						circH[(x+(N*(dim-dim2)))][y+(N*dim)] = matrixTmp[x][y];
+					}
+				}
+			}
+		}
+
+		dim2++;
+	}
 }
 
 /*
@@ -36,5 +126,14 @@ void padder2D(double ** f, double ** h, double ** fpad, double** hpad){
 	stacked - array to be unstacked or storage for stacked image
 */
 void stacker(double ** image, double * stacked, char which){
+
+}
+
+/*
+	*** INPUTS ***
+	A  is 2D block circulant matrix
+	fstacked is 1D array of stacked image rows
+*/
+void conv2(double ** A, double * fstacked){
 
 }
