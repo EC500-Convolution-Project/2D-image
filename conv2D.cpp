@@ -125,7 +125,42 @@ void padder2D(double ** f, double ** h, double ** fpad, double** hpad){
 	image - matrix to be row stacked or storage for unstacked image
 	stacked - array to be unstacked or storage for stacked image
 */
-void stacker(double ** image, double * stacked, char which){
+void stacker(double ** image, double * stacked, int N){
+
+	int x,y;
+	int position = 0;
+
+
+
+	for (x = 0; x < N; x++){
+		for(y = 0; y < N; y++){
+			stacked[position] = image[x][y];
+			position++;
+		}
+	}
+
+}
+
+
+/*
+	*** INPUTS ***
+	image - zero matrix to be filled 
+	stacked - array to be unstacked
+*/
+
+void unstacker(double * stacked, double ** image, int N){
+
+	int x,y; 
+	int position = 0;
+
+	for (x = 0; x < N; x++){
+		for (y = 0; y < N; y++){
+
+			image[x][y] = stacked[position];
+			position++;
+
+		}
+	}
 
 }
 
