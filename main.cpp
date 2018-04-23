@@ -16,37 +16,60 @@ int main(int argc, char** argv)
 	int N = 16;
 	double *  stack = new double[N*N];
 	double ** image = new double*[N];
+	double ** filter = new double*[N-4];
+	
+
 	for(int p=0; p<N; p++){
 		image[p] = new double[N];
+	}
+
+		for(int p=0; p<N-4; p++){
+		filter[p] = new double[N-4];
 	}
 
 
 	for(int x = 0; x<N; x++){
 		for(int y = 0; y < N; y++){
-			image[x][y] = 1.0;
+			image[x][y] = 0.0;
 
 		}
 	}
 
 
-	stacker(image,stack,N);
-
-	for(int i = 0; i < N*N;  i++){
-		cout << stack[i]<< endl; 
-	}
-
-	unstacker(stack,image,N);
-
-	for(int x = 0; x < N; x++){
-		for(int y = 0 ; y< N; y++ ){
-			cout<< image[x][y]<< ' ';
+	for(int x = 0; x<N-4; x++){
+		for(int y = 0; y < N-4; y++){
+			filter[x][y] = 1.0;
 
 		}
-		cout<< endl;
 	}
 
 
-	
+
+for(int x = 0; x<N; x++){
+		for(int y = 0; y < N; y++){
+			cout << image[x][y] << " ";
+
+		}
+		cout << endl;
+	}
+
+
+
+padder2D(filter, filter,image,image,2);
+
+
+cout << endl;
+
+for(int x = 0; x<N; x++){
+		for(int y = 0; y < N; y++){
+			cout << image[x][y] << " ";
+
+		}
+		cout << endl;
+	}
+
+
+
 	
 
 	return 0;
