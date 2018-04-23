@@ -115,25 +115,27 @@ void circ2(double ** hpad, double ** circH, int N, int M){
 	fpad is place to put zero-padded f
 	hpad is place to put zero-padded h
 */
-void padder2D(double ** f, double ** h, double ** fpad, double** hpad, int pad){
+void padder2D(double ** f, double ** h, double ** fpad, double** hpad, int N){
 
 	int x, y;
 
 	int size_f = *(&f[0] + 1) - f[0] -2 ;
 
-	int size_h = *(&h[0] + 1) - h[0]-2 ;
+	//int size_h = *(&h[0] + 1) - h[0]-2 ;
 
-	for(x = 0; x < size_f; x++){
-		for(y = 0; y < size_f; y ++){
-			fpad[x+pad][y+pad] = f[x][y]; 
+	for(x = 0; x <= size_f; x++){
+		for(y = 0; y <= size_f; y ++){
+			fpad[x][y] = f[x][y]; 
 		}
 	}
 
-	for(x = 0; x < size_h; x++){
-		for(y = 0; y < size_h; y ++){
-			hpad[x+pad][y+pad] = h[x][y]; 
-		}
-	}
+
+
+	//for(x = 0; x < size_h; x++){
+	//	for(y = 0; y < size_h; y ++){
+	//		hpad[x+pad][y+pad] = h[x][y]; 
+	//	}
+	//}
 
 
 	
@@ -204,11 +206,12 @@ void conv2(double ** A, double * fstacked, double * output, int N){
 
 					output[position] += A[x][y]*fstacked[position2];
 					position2 ++;
+					
 
 		}
 
 		position2 = 0;
-		position ++
+		position++;
 
 
 
