@@ -190,7 +190,27 @@ void unstacker(double * stacked, double ** image, int N){
 	*** INPUTS ***
 	A  is 2D block circulant matrix
 	fstacked is 1D array of stacked image rows
+	output is an empty array that will be populated through the convolution
 */
-void conv2(double ** A, double * fstacked){
+void conv2(double ** A, double * fstacked, double * output, int N){
 
+	int x, y; 
+	int position = 0;
+	int position2 = 0;
+
+
+	for(x = 0; x < N; x++){
+		for(y = 0; y < N ; y++){
+
+					output[position] += A[x][y]*fstacked[position2];
+					position2 ++;
+
+		}
+
+		position2 = 0;
+		position ++
+
+
+
+}
 }

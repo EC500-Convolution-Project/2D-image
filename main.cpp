@@ -17,6 +17,7 @@ int main(int argc, char** argv)
 	double *  stack = new double[N*N];
 	double ** image = new double*[N];
 	double ** filter = new double*[N-4];
+	double ** output = new double*[N];
 	
 
 	for(int p=0; p<N; p++){
