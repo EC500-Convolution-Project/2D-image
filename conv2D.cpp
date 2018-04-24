@@ -115,7 +115,31 @@ void circ2(double ** hpad, double ** circH, int N, int M){
 	fpad is place to put zero-padded f
 	hpad is place to put zero-padded h
 */
-void padder2D(double ** f, double ** h, double ** fpad, double** hpad){
+void padder2D(double ** f, double ** h, double ** fpad, double** hpad, int N){
+
+	int x, y;
+
+	int size_f = *(&f[0] + 1) - f[0] -2 ;
+
+	//int size_h = *(&h[0] + 1) - h[0]-2 ;
+
+	for(x = 0; x <= size_f; x++){
+		for(y = 0; y <= size_f; y ++){
+			fpad[x][y] = f[x][y]; 
+		}
+	}
+
+
+
+	//for(x = 0; x < size_h; x++){
+	//	for(y = 0; y < size_h; y ++){
+	//		hpad[x+pad][y+pad] = h[x][y]; 
+	//	}
+	//}
+
+
+	
+
 
 }
 
@@ -125,7 +149,42 @@ void padder2D(double ** f, double ** h, double ** fpad, double** hpad){
 	image - matrix to be row stacked or storage for unstacked image
 	stacked - array to be unstacked or storage for stacked image
 */
-void stacker(double ** image, double * stacked, char which){
+void stacker(double ** image, double * stacked, int N){
+
+	int x,y;
+	int position = 0;
+
+
+
+	for (x = 0; x < N; x++){
+		for(y = 0; y < N; y++){
+			stacked[position] = image[x][y];
+			position++;
+		}
+	}
+
+}
+
+
+/*
+	*** INPUTS ***
+	image - zero matrix to be filled 
+	stacked - array to be unstacked
+*/
+
+void unstacker(double * stacked, double ** image, int N){
+
+	int x,y; 
+	int position = 0;
+
+	for (x = 0; x < N; x++){
+		for (y = 0; y < N; y++){
+
+			image[x][y] = stacked[position];
+			position++;
+
+		}
+	}
 
 }
 
@@ -133,7 +192,28 @@ void stacker(double ** image, double * stacked, char which){
 	*** INPUTS ***
 	A  is 2D block circulant matrix
 	fstacked is 1D array of stacked image rows
+	output is an empty array that will be populated through the convolution
 */
-void conv2(double ** A, double * fstacked){
+void conv2(double ** A, double * fstacked, double * output, int N){
 
+	int x, y; 
+	int position = 0;
+	int position2 = 0;
+
+
+	for(x = 0; x < N; x++){
+		for(y = 0; y < N ; y++){
+
+					output[position] += A[x][y]*fstacked[position2];
+					position2 ++;
+					
+
+		}
+
+		position2 = 0;
+		position++;
+
+
+
+}
 }
