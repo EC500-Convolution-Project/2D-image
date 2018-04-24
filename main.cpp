@@ -7,23 +7,16 @@
 
 #define cimg_display 0
 #include "conv2D.h"
-#include "CImg.h"
+#include "image.h"
 
 using namespace std;
-using namespace cimg_library;
+
 
 int main(int argc, char** argv)
 {
-  CImg<double> img("image.bmp");
-
-  /* CImg defines macros for looping over images. Examples:
-     http://cimg.eu/reference/group__cimg__loops.html
-  */
-  cimg_forXY(img,x,y) {
-    cout << "x: " << x << " y: " << y << " pixel: " << img(x,y) << endl;
-  }
-  img.save("new_image.bmp");
-	
-
-	return 0;
+  double **image;
+  int N = get_image_matrix(image);
+  save(image, N);
+  
+  return 0;
 }

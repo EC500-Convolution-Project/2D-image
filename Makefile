@@ -8,10 +8,10 @@ convolution2D: $(OBJS)
 	$(CC) -o convolution2D $(OBJS) $(FLAGS)
 
 conv2D.o: conv2D.cpp conv2D.h
-	$(CC) -c conv2D.cpp -o conv2D.o 
+	$(CC) -c conv2D.cpp -o conv2D.o -g
 
 main.o: main.cpp conv2D.h 
-	$(CC) -c main.cpp 
+	$(CC) -c main.cpp -g
 
 clean: 
 	rm $(OBJS) convolution2D
