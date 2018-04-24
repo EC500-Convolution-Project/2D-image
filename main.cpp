@@ -5,13 +5,19 @@
 	Group 1
 */
 
+#define cimg_display 0
 #include "conv2D.h"
 #include <iostream>
+#include "image.h"
 using namespace std;
+
 
 int main(int argc, char** argv)
 {
 
+  double **image;
+  int N = get_image_matrix(image);
+  save(image, N);
 
 
 	// Initilize arrays 
@@ -168,11 +174,6 @@ for(int x = 0; x <  16; x++){
 }
 
 
-
-
-
-
-	
-
 	return 0;
 }
+
