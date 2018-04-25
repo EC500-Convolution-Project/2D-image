@@ -19,7 +19,9 @@ void circ(double * array, double ** circArray, int N){
 	int x,y,dim,dim2;
 
 	//lower triangle
+	#pragma parallel loop shared(ircArray,array,N)
 	for(x=0;x<N;x++){
+		#pragma acc parallel for shared(x)
 		for(y=0;y<N;y++){
 			if(x+y < N){
 				circArray[y+x][y] = array[x];
@@ -30,8 +32,10 @@ void circ(double * array, double ** circArray, int N){
 	//upper triangle, skip middle since already done
 	dim = N-2;
 	dim2 = 0;
+
+	#pragma acc parallel loop shared(circArray,array,N)
 	for(x=0;x<N;x++){
-			
+			#pragma acc parallel loop shared(x)
 			for(y=1;y<N;y++){
 				if(y+dim<N && y+dim2<N){
 					circArray[x][y+dim2] = array[y+dim];
@@ -62,7 +66,9 @@ void circ2(double ** hpad, double ** circH, int N, int M){
 	}
 
 	//for columns in hpad, create circulant matrices - lower triangle
+	#pragma acc parallel loop shared(arrayTmp,hpad,M)
 	for(i=0;i<M;i++){
+		#pragma acc parallel loop shared(N)
 		for(j=0;j<N;j++){
 			arrayTmp[j] = hpad[j][i];
 		}
@@ -70,7 +76,9 @@ void circ2(double ** hpad, double ** circH, int N, int M){
 		circ(arrayTmp,matrixTmp,N); // get circulant of that column
 		
 		//place into correct position
+		#pragma acc parallel loop shared(N,circH,matrixTmp)
 		for(dim=0;dim<N;dim++){
+			#pragma acc parallel loop shared(dim)
 			for(x=0;x<N;x++){
 				for(y=0;y<N;y++){
 					if((x+(N*dim)+(i*N)) < (N*M)){
@@ -86,6 +94,7 @@ void circ2(double ** hpad, double ** circH, int N, int M){
 	//for columns in hpad, create circulant matrices - upper triangle
 	//skip middle portion, since already complete
 	dim2 = 1;
+	#pragma acc loop
 	for(i=M-1;i>0;i--){
 		for(j=0;j<N;j++){
 			arrayTmp[j] = hpad[j][i];
@@ -200,8 +209,9 @@ void conv2(double ** A, double * fstacked, double * output, int N){
 	int position = 0;
 	int position2 = 0;
 
-
+	#pragma acc parallel loop shared(output,fstacked,position,position2,N)
 	for(x = 0; x < N; x++){
+		#pragma acc parallel loop reduction(+:output) shared(x)
 		for(y = 0; y < N ; y++){
 
 					output[position] += A[x][y]*fstacked[position2];
