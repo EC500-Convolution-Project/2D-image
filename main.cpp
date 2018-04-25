@@ -8,6 +8,7 @@
 #define cimg_display 0
 #include "conv2D.h"
 #include <iostream>
+#include <chrono>
 #include "image.h"
 using namespace std;
 
@@ -15,13 +16,25 @@ using namespace std;
 int main(int argc, char** argv)
 {
 
-  double **image;
-  int N = get_image_matrix(image);
-  save(image, N);
+	for(int N = 64; N <= 1000; N=N*2){
+
+
+  // TIMING LINE 1: Get the starting timestamp. 
+  std::chrono::time_point<std::chrono::steady_clock> begin_time =
+    std::chrono::steady_clock::now();	
+
+  
+  //double **image;
+  //int N = ;
+
+//Convolve here!
+
+  
 
 
 	// Initilize arrays 
-	int image_N = 16;
+	//int image_N = get_image_matrix(image);
+	int image_N = N;
 	int filter_N = 3;
 	double *  stack = new double[image_N*image_N];
 	double *  outstack = new double[image_N*image_N];
@@ -57,7 +70,8 @@ int main(int argc, char** argv)
 
 	for(int x = 0; x<image_N; x++){
 		for(int y = 0; y < image_N; y++){
-			image[x][y] = x+y;
+			image[x][y] = x/(y+1);
+			padfilter[x][y] = 0; 
 
 		}
 	}
@@ -65,66 +79,71 @@ int main(int argc, char** argv)
 
 	for(int x = 0; x<filter_N; x++){
 		for(int y = 0; y < filter_N; y++){
-			filter[x][y] = x+y;
+			if(x == 0 && y == 0){
+				filter[x][y] = 1;
+			}
+			else{
+			filter[x][y] = 0;
 
 		}
 	}
+}
 
 
 
 
-cout << "this is the image" << endl;
+//cout << "this is the image" << endl;
 for(int x = 0; x <  image_N; x++){
 	for(int y = 0 ; y < image_N ; y++){
 
-		cout << image[x][y] << " "; 
+		//cout << image[x][y] << " "; 
 
 	}
-	cout << endl;
+	//cout << endl;
 }
 
-cout << "this is the filter" << endl;
+//cout << "this is the filter" << endl;
 for(int x = 0; x <  filter_N; x++){
 	for(int y = 0 ; y < filter_N ; y++){
 
-		cout << filter[x][y] << " "; 
+		//cout << filter[x][y] << " "; 
 
 	}
-	cout << endl;
+	//cout << endl;
 }
 
 
-padder2D(filter,image,padfilter,image,16);
+padder2D(filter,image,padfilter,image,image_N);
 
-cout << endl;
+//cout << endl;
 
-cout << "this is the padded filter" << endl;
+//cout << "this is the padded filter" << endl;
 for(int x = 0; x <  image_N; x++){
 	for(int y = 0 ; y < image_N ; y++){
 
-		cout << padfilter[x][y] << " "; 
+		//cout << padfilter[x][y] << " "; 
 
 	}
-	cout << endl;
+	//cout << endl;
 }
 
 
 
 
-circ2(padfilter,circular,16,16);
+circ2(padfilter,circular,image_N,image_N);
 
 int circsize = *(&circular[0] + 1) - circular[0]-2 ;
 
-cout << "circular size is " << circsize << endl;
+//cout << "circular size is " << circsize << endl;
 
 
 for(int x = 0; x <  circsize; x++){
 	for(int y = 0 ; y < circsize ; y++){
 
-		cout << circular[x][y] << " "; 
+		//cout << circular[x][y] << " "; 
 
 	}
-	cout << endl;
+	//cout << endl;
 }
 
 
@@ -134,45 +153,61 @@ stacker(image,stack,image_N);
 
 int stacksize = *(&stack + 1) - stack-2 ;
 
-cout << "stack size is " << stacksize << endl;
+//cout << "stack size is " << stacksize << endl;
 
 for(int i = 0 ; i < stacksize ; i++){
-	cout<< stack[i] << endl;
+	//cout<< stack[i] << endl;
 }
 
 
-cout << endl;
+//cout << endl;
 
-conv2(circular,stack,outstack,256);
+conv2(circular,stack,outstack,image_N*image_N);
 
 int outstacksize = *(&outstack + 1) - outstack-2 ;
 
-cout << "outstack size is " << outstacksize << endl;
+//cout << "outstack size is " << outstacksize << endl;
 
-for(int i = 0 ; i < outstacksize ; i++){
-	cout<< outstack[i] << endl;
+for(int i = 0 ; i < image_N*image_N ; i++){
+	//cout<< outstack[i] << endl;
 }
 
 
 
+unstacker(outstack,image,image_N);
 
 
+//cout << endl;
+//cout << "final image"<< endl;
 
-unstacker(outstack,image,16);
+for(int x = 0; x <  image_N; x++){
+	for(int y = 0 ; y <image_N ; y++){
 
-
-cout << endl;
-cout << "final image"<< endl;
-
-for(int x = 0; x <  16; x++){
-	for(int y = 0 ; y < 16 ; y++){
-
-		cout << image[x][y] << " "; 
+		//cout << image[x][y] << " "; 
 
 	}
-	cout << endl;
+	//cout << endl;
 }
 
+//save(image, image_N);
+
+
+ // TIMING LINE 2: Get the ending timestamp.
+  std::chrono::time_point<std::chrono::steady_clock> end_time =
+    std::chrono::steady_clock::now();
+
+  // TIMING LINE 3: Compute the difference.
+  std::chrono::duration<double> difference_in_time = end_time - begin_time;
+
+  // TIMING LINE 4: Get the difference in seconds.
+  double difference_in_seconds = difference_in_time.count();
+
+// Print the integral.
+  //if (my_rank == 0){
+  cout << N << ' ';
+  printf(" %.8f seconds.\n",difference_in_seconds);
+ 
+}
 
 	return 0;
 }
