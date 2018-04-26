@@ -1,0 +1,5 @@
+gitignore
+conv2D.o
+convolution2D
+main.o
+new_image.bmp
