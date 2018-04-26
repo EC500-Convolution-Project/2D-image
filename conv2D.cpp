@@ -217,3 +217,32 @@ void conv2(double ** A, double * fstacked, double * output, int N){
 
 }
 }
+
+void conv2_dir(double ** A, double ** filter, double ** output, int N, int filter_N){
+
+	int x, y; 
+	int x_pos, y_pos;
+
+	for(x = 0; x < N; x++){
+		for(y = 0; y < N ; y++){
+
+			for( x_pos = 0; x_pos <filter_N; x_pos++){
+				for(y_pos = 0 ; y_pos < filter_N; y_pos++){
+
+
+					if (x+x_pos < N && y+y_pos < N){
+					output[x][y] += A[x+x_pos][y+y_pos]*filter[x_pos][y_pos];
+
+					//cout << x+x_pos <<" , " << y+y_pos << endl;
+				}
+
+                 
+				}
+			}
+
+		}
+	}
+
+
+
+}

@@ -13,6 +13,7 @@
 #include <cstdlib>
 #include <complex>
 #include <string>
+#include <chrono>
 using namespace std;
 
 void circ(double * array, double ** circArray, int N);
@@ -21,5 +22,6 @@ void padder2D(double ** f, double ** h, double ** fpad, double** hpad, int pad);
 void stacker(double ** image, double * stacked, int N);
 void unstacker(double * stacked, double ** image, int N);
 void conv2(double ** A, double * fstacked, double * output, int N);
+void conv2_dir(double ** A, double ** filter, double ** output, int N, int filter_N);
 
 #endif
