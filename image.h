@@ -1,31 +1,50 @@
-#include "CImg.h"
+#include "lodepng.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-using namespace cimg_library;
+int get_image_matrix(char **image) {
+  unsigned error;
+  unsigned char* image1D;
+  unsigned width, height;
+
+  error = lodepng_decode32_file(&image1D, &width, &height, "image.png");
+  if(error) printf("error %u: %s\n", error, lodepng_error_text(error));
 
 
-/*
-  Takes an image filename (defaults image.bmp), fills 2D array with
-  pixels and returns image width.
-  double **image - Pointer to 2D array to be populated
- */
-int get_image_matrix(double **&image) {
+  image = (char**)malloc(sizeof(char*)*width);
 
-  CImg<double> img("image.bmp");
-  image = new double*[img.width()];
-  for (int i = 0; i < img.width(); i++) image[i] = new double[img.height()];
+  printf(" %c \n", image1D[0]);
+  for (int i = 0; i < height; i++)
+    for (int j = 0; j < width; j++) {
 
-  /* 
-     CImg defines macros for looping over images. Examples:
-     http://cimg.eu/reference/group__cimg__loops.html
-  */
-
-  cimg_forXY(img,x,y) image[x][y] = img(x,y);
-
-  return img.width(); //We're only using square images
+      image[i][j] = image1D[(i*height) + width];
+      printf(" %d %d \n", i, j);
+    }
+    
+  return width; //We're only using square images
 }
 
-void save(double **image, int N) {
-  CImg<double> img(N, N);
-  cimg_forXY(img,x,y) img(x,y) =  image[x][y];
-  img.save("new_image.bmp");
+void save(char **image, int N) {
+  unsigned width = N;
+  unsigned height = N;
+  unsigned char* image1D;
+  
+  for (int i = 0; i < height; i++)
+    for (int j = 0; j < width; j++)
+      image1D[(i*height) + width] = image[i][j];
+  
+  unsigned error = lodepng_encode32_file("new_image", image1D, width, height);
+
+  /*if there's an error, display it*/
+  if(error) printf("error %u: %s\n", error, lodepng_error_text(error)); 
 }
+
+void encodeOneStep(const char* filename, const unsigned char* image, unsigned width, unsigned height)
+{
+  /*Encode the image*/
+  unsigned error = lodepng_encode32_file(filename, image, width, height);
+
+  /*if there's an error, display it*/
+  if(error) printf("error %u: %s\n", error, lodepng_error_text(error));
+}
+
