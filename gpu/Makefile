@@ -1,10 +1,10 @@
-COMPILER ?= PGI-tesla
+COMPILER ?= GCC
 CC = pgcc
 CFLAGS = -DUSE_DOUBLE
 OBJS = main.o lodepng.o 
 
 ifeq ($(COMPILER),GCC)
-	CFLAGS += -std=c99 -march=native -O3 -lm
+	CFLAGS += 
 else ifeq ($(COMPILER),PGI)
 	CFLAGS += -fast
 else ifeq ($(COMPILER),PGI-tesla)

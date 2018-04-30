@@ -11,7 +11,7 @@
 #include "lodepng.h"
 
 
-#define filter_N 16
+#define filter_N 3
 #define IMAGE_N 64
 
 double get_time() {
@@ -25,9 +25,9 @@ int main(int argc, char** argv) {
   unsigned error;
   unsigned char* image1D;
   unsigned width, height;
+//int IMAGE_N = 64;
   double start;  // Time measurements
-  char filter[filter_N][filter_N] = {{0}};
-  filter[1][1] = 1;
+  char filter[filter_N][filter_N] = {{0.25, 0.25, 0.25}, {0.25, 0.75, 0.25}, {0.25, 0.25, 0.25}};
   
   error = lodepng_decode32_file(&image1D, &width, &height, "image.png");
   if(error) printf("error %u: %s\n", error, lodepng_error_text(error));
@@ -37,9 +37,15 @@ int main(int argc, char** argv) {
 
   /* Need to convert 1D iamge to 2D */
   
-  for (int i = 0; i < height; i++)
-    for (int j = 0; j < width; j++)
+for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width; j++) {
       image[i][j] = image1D[(i*height) + width];
+      printf("%u ", image[i][j]);
+    }
+printf("\n");
+}
+
+
 
   /* Convolve here */
   start = get_time();
@@ -55,6 +61,15 @@ int main(int argc, char** argv) {
 	      output[x][y] += image[x+x_pos][y+y_pos]*filter[x_pos][y_pos];
   }
 
+printf(" \n \n \n output: \n");
+
+for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width; j++) {
+ 
+      printf("%u ", output[i][j]);
+    }
+printf("\n");
+}
   double runtime = get_time() - start;
   printf( "Runtime: %8.4f \n", runtime );
   
