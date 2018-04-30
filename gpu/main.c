@@ -12,7 +12,7 @@
 
 
 #define filter_N 16
-#define image_N 64
+#define IMAGE_N 64
 
 double get_time() {
     struct timeval tv;
@@ -32,8 +32,8 @@ int main(int argc, char** argv) {
   error = lodepng_decode32_file(&image1D, &width, &height, "image.png");
   if(error) printf("error %u: %s\n", error, lodepng_error_text(error));
 
-  char image[image_N][image_N] = {{0}};
-  char output[image_N][image_N] = {{0}};
+  char image[IMAGE_N][IMAGE_N] = {{0}};
+  char output[IMAGE_N][IMAGE_N] = {{0}};
 
   /* Need to convert 1D iamge to 2D */
   
@@ -44,15 +44,16 @@ int main(int argc, char** argv) {
   /* Convolve here */
   start = get_time();
 
-  int N = width;
-  #pragma acc kernels
-  for(int x = 0; x < N; x++) 
-    for(int y = 0; y < N ; y++)
-      for(int x_pos = 0; x_pos <filter_N; x_pos++)
-	for(int y_pos = 0 ; y_pos < filter_N; y_pos++) 
-	  if (x+x_pos < N && y+y_pos < N)
-	    output[x][y] += image[x+x_pos][y+y_pos]*filter[x_pos][y_pos];
-	  
+
+  #pragma acc kernels copy(image[0:IMAGE_N][0:IMAGE_N]), copyout(output[0:IMAGE_N][0:IMAGE_N])
+  {
+    for(int x = 0; x < IMAGE_N; x++) 
+      for(int y = 0; y < IMAGE_N; y++)
+	for(int x_pos = 0; x_pos <filter_N; x_pos++)
+	  for(int y_pos = 0 ; y_pos < filter_N; y_pos++) 
+	    if (x+x_pos < height && y+y_pos < width) //improve
+	      output[x][y] += image[x+x_pos][y+y_pos]*filter[x_pos][y_pos];
+  }
 
   double runtime = get_time() - start;
   printf( "Runtime: %8.4f \n", runtime );
