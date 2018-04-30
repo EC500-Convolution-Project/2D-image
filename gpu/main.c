@@ -12,7 +12,7 @@
 
 
 #define filter_N 3
-#define IMAGE_N 16384
+#define IMAGE_N 16
 
 double get_time() {
     struct timeval tv;
@@ -55,11 +55,13 @@ for (int i = 0; i < IMAGE_N; i++) {
       for(int y = 0; y < IMAGE_N; y++)
 	for(int x_pos = 0; x_pos <filter_N; x_pos++)
 	  for(int y_pos = 0 ; y_pos < filter_N; y_pos++) 
-	    if (x+x_pos < height && y+y_pos < width) //improve
+	    if (x+x_pos < height && y+y_pos < width){ //improve
+	      // printf("%d %d \n", x, y);
 	      output[x][y] += image[x+x_pos][y+y_pos]*filter[x_pos][y_pos];
+	    }
   }
 
-//printf(" \n \n \n output: \n");
+
 
 /* for (int i = 0; i < height; i++) { */
 /*     for (int j = 0; j < width; j++) { */
