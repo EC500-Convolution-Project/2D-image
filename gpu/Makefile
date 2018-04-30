@@ -8,7 +8,7 @@ ifeq ($(COMPILER),GCC)
 else ifeq ($(COMPILER),PGI)
 	CFLAGS += -fast
 else ifeq ($(COMPILER),PGI-tesla)
-	CFLAGS += -Minfo=accel -fast -acc -ta=tesla:cc60
+	CFLAGS += -Minfo=accel -fast -acc -ta=tesla:cc20
 else ifeq ($(COMPILER),PGI-multicore)
 	CFLAGS += -Minfo=accel -fast -acc -ta=multicore
 endif

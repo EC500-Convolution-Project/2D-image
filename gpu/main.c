@@ -12,7 +12,7 @@
 
 
 #define filter_N 3
-#define IMAGE_N 64
+#define IMAGE_N 16384
 
 double get_time() {
     struct timeval tv;
@@ -25,26 +25,24 @@ int main(int argc, char** argv) {
   unsigned error;
   unsigned char* image1D;
   unsigned width, height;
-//int IMAGE_N = 64;
   double start;  // Time measurements
-  char filter[filter_N][filter_N] = {{0.25, 0.25, 0.25}, {0.25, 0.75, 0.25}, {0.25, 0.25, 0.25}};
+  int filter[filter_N][filter_N] = {{0}};
   
   error = lodepng_decode32_file(&image1D, &width, &height, "image.png");
   if(error) printf("error %u: %s\n", error, lodepng_error_text(error));
 
-  char image[IMAGE_N][IMAGE_N] = {{0}};
-  char output[IMAGE_N][IMAGE_N] = {{0}};
+  int image[IMAGE_N][IMAGE_N] = {{0}};
+  int output[IMAGE_N][IMAGE_N] = {{0}};
 
   /* Need to convert 1D iamge to 2D */
   
-for (int i = 0; i < height; i++) {
-    for (int j = 0; j < width; j++) {
-      image[i][j] = image1D[(i*height) + width];
-      printf("%u ", image[i][j]);
+for (int i = 0; i < IMAGE_N; i++) {
+    for (int j = 0; j < IMAGE_N; j++) {
+        //image[i][j] = (i+1)*(j+1);
+        image[i][j] = 1;
     }
-printf("\n");
 }
-
+//printf("N: %d Last element in array is N^2: %d \n", IMAGE_N, image[IMAGE_N-1][IMAGE_N-1]);
 
 
   /* Convolve here */
@@ -61,17 +59,17 @@ printf("\n");
 	      output[x][y] += image[x+x_pos][y+y_pos]*filter[x_pos][y_pos];
   }
 
-printf(" \n \n \n output: \n");
+//printf(" \n \n \n output: \n");
 
-for (int i = 0; i < height; i++) {
-    for (int j = 0; j < width; j++) {
+/* for (int i = 0; i < height; i++) { */
+/*     for (int j = 0; j < width; j++) { */
  
-      printf("%u ", output[i][j]);
-    }
-printf("\n");
-}
+/*       printf("%u ", output[i][j]); */
+/*     } */
+/* printf("\n"); */
+/* } */
   double runtime = get_time() - start;
-  printf( "Runtime: %8.4f \n", runtime );
+printf( "%d \t %8.4f seconds \n", IMAGE_N, runtime );
   
   /* Coonvert 2D image baxck to 1D for saving */
   for (int i = 0; i < height; i++)
