@@ -34,7 +34,7 @@ void makePhase2(Complex **omega, int N ){
 	}
 }
 
-void FFT2(Complex ** F, int N){
+void FFT2(double ** F, Complex **Ftilde, int N){
 
 	int k,x,j,i;
 	Complex * evens = new Complex[N/2];
@@ -43,6 +43,15 @@ void FFT2(Complex ** F, int N){
 	Complex * odds2 = new Complex[N/2];
 	Complex * omegaTmp = new Complex[N];
 	makePhase(omegaTmp,N);
+
+	//make Complex F
+	Complex ** Ftmp = new Complex*[N];
+	for(int i=0;i<N;i++){
+		Ftmp[i] = new Complex[N];
+		for(int j =0;j<N;j++){
+			Ftmp[i][j] = (Complex)F[i][j]; 
+		}
+	}
 
 	if(N <= 1){
 		return;
@@ -61,8 +70,8 @@ void FFT2(Complex ** F, int N){
 
 		for(k = 0; k < N/2; k++){
 
-			F[i][k] = evens[k] + (omegaTmp[k]*odds[k]);
-			F[i][N/2 + k] = evens[k] - (omegaTmp[k]*odds[k]);
+			Ftilde[i][k] = evens[k] + (omegaTmp[k]*odds[k]);
+			Ftilde[i][N/2 + k] = evens[k] - (omegaTmp[k]*odds[k]);
 
 		}
 	}
@@ -80,18 +89,21 @@ void FFT2(Complex ** F, int N){
 
 		for(k = 0; k < N/2; k++){
 
-			F[k][i] = evens2[k] + (omegaTmp[k]*odds2[k]);
-			F[N/2 + k][i] = evens2[k] - (omegaTmp[k]*odds2[k]);
+			Ftilde[k][i] = evens2[k] + (omegaTmp[k]*odds2[k]);
+			Ftilde[N/2 + k][i] = evens2[k] - (omegaTmp[k]*odds2[k]);
 
 		}
 	}
 }
 
 
-void FFTinv2(Complex ** F, Complex ** Ftilde, Complex ** omega, int N){
+void FFTinv2(double ** F, Complex ** Ftilde, Complex ** omega, int N){
 
 	int x,k,i;
-
+	Complex ** Ftmp = new Complex*[N];
+	for(i=0;i<N;i++){
+		Ftmp[i] = new Complex[N];
+	}
 //for every row
 	for(i=0;i<N;i++){
 		for(x = 0; x < N; x++){
@@ -100,7 +112,7 @@ void FFTinv2(Complex ** F, Complex ** Ftilde, Complex ** omega, int N){
 
 			for(k = 0; k < N; k++){
 
-				F[i][x] +=pow(omega[i][k],-x)*Ftilde[i][k]/(double) N;
+				Ftmp[i][x] +=pow(omega[i][k],-x)*Ftilde[i][k]/(double) N;
 
 			}
 		}
@@ -114,9 +126,15 @@ void FFTinv2(Complex ** F, Complex ** Ftilde, Complex ** omega, int N){
 
 			for(k = 0; k < N; k++){
 
-				F[x][i] +=pow(omega[k][i],-x)*Ftilde[k][i]/(double) N;
+				Ftmp[x][i] +=pow(omega[k][i],-x)*Ftilde[k][i]/(double) N;
 
 			}
+		}
+	}
+
+	for(i=0;i<N;i++){
+		for(k=0;k<N;k++){
+			F[i][k] = (double)abs(real(Ftmp[i][k]));
 		}
 	}
 }
@@ -149,4 +167,40 @@ void FFT(Complex * F, int N){
 			F[N/2 + k] = evens[k] - (omegaTmp[k]*odds[k]);
 
 		}
+}
+
+void allToAll(Complex **Ftilde, Complex **Htilde, double ** F, int N){
+
+	//storage for intermediate value
+	Complex ** FtildeTmp = new Complex*[N];
+	//storage for omega
+	Complex ** omegaTmp = new Complex*[N];
+
+	for(int k=0;k<N;k++){
+		FtildeTmp[k] = new Complex[N];
+		omegaTmp[k] = new Complex[N];
+	}
+	makePhase2(omegaTmp,N);
+
+	for(int i=0;i<N;i++){
+		for(int j =0;j<N;j++){
+			FtildeTmp[i][j] = Ftilde[i][j] * Htilde[i][j];
+		}
+	}
+
+	FFTinv2(F,FtildeTmp,omegaTmp,N);
+}
+
+void FFTConv(double ** F, double ** H, double ** output, int N){
+
+	Complex ** Ftildetmp = new Complex*[N];
+	Complex ** Htildetmp = new Complex*[N];
+	for(int i=0;i<N;i++){
+		Ftildetmp[i] = new  Complex[N];
+		Htildetmp[i] = new  Complex[N];
+	}
+
+	FFT2(F,Ftildetmp,N);
+	FFT2(H,Htildetmp,N);
+	allToAll(Ftildetmp,Htildetmp,output,N);
 }
