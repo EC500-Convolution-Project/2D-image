@@ -46,6 +46,7 @@ void FFT2(double ** F, Complex **Ftilde, int N){
 
 	//make Complex F
 	Complex ** Ftmp = new Complex*[N];
+        #pragma acc kernels
 	for(int i=0;i<N;i++){
 		Ftmp[i] = new Complex[N];
 		for(int j =0;j<N;j++){
@@ -58,6 +59,7 @@ void FFT2(double ** F, Complex **Ftilde, int N){
 	}
 	
 	//for each row
+
 	for(i=0;i<N;i++){
 		//split even and odd rows
 		for(j=0;j<N/2;j++){
@@ -195,6 +197,7 @@ void FFTConv(double ** F, double ** H, double ** output, int N){
 
 	Complex ** Ftildetmp = new Complex*[N];
 	Complex ** Htildetmp = new Complex*[N];
+	#pragma acc kernels
 	for(int i=0;i<N;i++){
 		Ftildetmp[i] = new  Complex[N];
 		Htildetmp[i] = new  Complex[N];

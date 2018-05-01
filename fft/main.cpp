@@ -9,9 +9,17 @@
 #include "conv2D.h"
 #include <iostream>
 #include "fft.h"
+#include <sys/time.h>
 
 using namespace std;
 
+
+double get_time() {
+    struct timeval tv;
+    struct timezone tz;
+    gettimeofday(&tv, &tz);
+    return 1.0*tv.tv_sec+1.0E-6*tv.tv_usec;
+}
 
 int main(int argc, char** argv)
 {
@@ -32,6 +40,7 @@ int main(int argc, char** argv)
 	//int image_N = get_image_matrix(image);
 	int image_N = N;
 	int filter_N = N;
+	double start;
 	//double *  stack = new double[image_N*image_N];
 	//double *  outstack = new double[image_N*image_N];
 	double ** image = new double*[image_N];
@@ -174,7 +183,11 @@ int main(int argc, char** argv)
 //unstacker(outstack,image,image_N);
 
 //conv2_dir(image, filter,output,image_N,filter_N);
+start = get_time();	
 FFTConv(image,filter,output,image_N);
+
+ double runtime = get_time() - start;
+ printf( "%d \t %8.4f seconds \n", N, runtime );
 
 //cout << endl;
 //cout << "final image"<< endl;
