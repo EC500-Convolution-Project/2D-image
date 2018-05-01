@@ -10,6 +10,7 @@
 #include <iostream>
 #include <chrono>
 #include "image.h"
+#include "fft.h"
 
 using namespace std;
 
@@ -17,7 +18,7 @@ using namespace std;
 int main(int argc, char** argv)
 {
 
-	for(int N = 16; N <= 5000; N=N*2){
+	for(int N = 16; N <= 2050; N=N*2){
 
 
   // TIMING LINE 1: Get the starting timestamp. 
@@ -36,7 +37,7 @@ int main(int argc, char** argv)
 	// Initilize arrays 
 	//int image_N = get_image_matrix(image);
 	int image_N = N;
-	int filter_N = 16;
+	int filter_N = N;
 	//double *  stack = new double[image_N*image_N];
 	//double *  outstack = new double[image_N*image_N];
 	double ** image = new double*[image_N];
@@ -81,7 +82,7 @@ int main(int argc, char** argv)
 
 	for(int x = 0; x<filter_N; x++){
 		for(int y = 0; y < filter_N; y++){
-			if(x == 1 && y == 1){
+			if(x == N/2 && y == N/2){
 				filter[x][y] = 1;
 			}
 			else{
@@ -178,18 +179,18 @@ int main(int argc, char** argv)
 
 //unstacker(outstack,image,image_N);
 
-conv2_dir(image, filter,output,image_N,filter_N);
-
+//conv2_dir(image, filter,output,image_N,filter_N);
+FFTConv(image,filter,output,image_N);
 
 //cout << endl;
 //cout << "final image"<< endl;
 
 //for(int x = 0; x <  image_N; x++){
-//	for(int y = 0 ; y <image_N ; y++){
+	//for(int y = 0 ; y <image_N ; y++){
 
 		//cout << output[x][y] << " "; 
 
-//	}
+	//}
 	//cout << endl;
 //}
 
