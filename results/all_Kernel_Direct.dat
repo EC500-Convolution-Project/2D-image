@@ -1,0 +1,9 @@
+N		GPU all					Multi all		Serial all
+---   ---------------		---------------		---------------
+16 	   0.2816 seconds		0.0038 seconds 		0.0002 seconds
+32 	   0.2747 seconds 		0.0087 seconds 		0.0038 seconds
+64 	   0.2755 seconds 		0.0095 seconds		0.0443 seconds
+128    0.2799 seconds 		0.0229 seconds 		0.5906 seconds
+256    0.3010 seconds 		0.2424 seconds 		9.3397 seconds
+512    0.5573 seconds 		3.5391 seconds 		147.2521 seconds 
+1024   4.5761 seconds 		54.7941 seconds		2347.5400 seconds 	
