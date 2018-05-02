@@ -1,0 +1,11 @@
+N		total    	gpu time	 compute device	data copyin	data copyout 
+16 	   0.1843 seconds      71                7                 31               33
+32 	   0.2771 seconds      75                7                 33               35
+64 	   0.1821 seconds      81                8                 34               39
+128 	   0.2452 seconds      121                14                 45               62
+256 	   0.1849 seconds      264                33                 83               148
+512 	   0.1932 seconds      805                113                 204               488
+1024 	   0.2387 seconds      3,174               446                845               1,883
+2048 	   0.2097 seconds      12,539               1,828              3,297               7,470
+8192 	   0.5332 seconds      155,589               28,643           45,016               81,930
+16384 	   1.6193 seconds      624,975               117,396          180,011            327,5681

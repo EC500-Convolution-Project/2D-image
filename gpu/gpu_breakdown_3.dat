@@ -1,0 +1,192 @@
+16 	   0.1843 seconds 
+
+Accelerator Kernel Timing data
+/projectnb/paralg/pdillon/project/2D-image/gpu/main.c
+  main  NVIDIA  devicenum=0
+    time(us): 71
+    62: compute region reached 1 time
+        67: kernel launched 1 time
+            grid: [1x16]  block: [32]
+             device time(us): total=7 max=7 min=7 avg=7
+            elapsed time(us): total=493 max=493 min=493 avg=493
+    62: data region reached 4 times
+        62: data copyin transfers: 2
+             device time(us): total=31 max=23 min=8 avg=15
+        81: data copyout transfers: 2
+             device time(us): total=33 max=21 min=12 avg=16
+32 	   0.2771 seconds 
+
+Accelerator Kernel Timing data
+/projectnb/paralg/pdillon/project/2D-image/gpu/main.c
+  main  NVIDIA  devicenum=0
+    time(us): 75
+    62: compute region reached 1 time
+        67: kernel launched 1 time
+            grid: [1x32]  block: [32]
+             device time(us): total=7 max=7 min=7 avg=7
+            elapsed time(us): total=485 max=485 min=485 avg=485
+    62: data region reached 4 times
+        62: data copyin transfers: 2
+             device time(us): total=33 max=24 min=9 avg=16
+        81: data copyout transfers: 2
+             device time(us): total=35 max=23 min=12 avg=17
+64 	   0.1821 seconds 
+
+Accelerator Kernel Timing data
+/projectnb/paralg/pdillon/project/2D-image/gpu/main.c
+  main  NVIDIA  devicenum=0
+    time(us): 81
+    62: compute region reached 1 time
+        67: kernel launched 1 time
+            grid: [1x64]  block: [64]
+             device time(us): total=8 max=8 min=8 avg=8
+            elapsed time(us): total=481 max=481 min=481 avg=481
+    62: data region reached 4 times
+        62: data copyin transfers: 2
+             device time(us): total=34 max=25 min=9 avg=17
+        81: data copyout transfers: 2
+             device time(us): total=39 max=24 min=15 avg=19
+128 	   0.2452 seconds 
+
+Accelerator Kernel Timing data
+/projectnb/paralg/pdillon/project/2D-image/gpu/main.c
+  main  NVIDIA  devicenum=0
+    time(us): 121
+    62: compute region reached 1 time
+        67: kernel launched 1 time
+            grid: [1x128]  block: [128]
+             device time(us): total=14 max=14 min=14 avg=14
+            elapsed time(us): total=484 max=484 min=484 avg=484
+    62: data region reached 4 times
+        62: data copyin transfers: 2
+             device time(us): total=45 max=36 min=9 avg=22
+        81: data copyout transfers: 2
+             device time(us): total=62 max=36 min=26 avg=31
+256 	   0.1849 seconds 
+
+Accelerator Kernel Timing data
+/projectnb/paralg/pdillon/project/2D-image/gpu/main.c
+  main  NVIDIA  devicenum=0
+    time(us): 264
+    62: compute region reached 1 time
+        67: kernel launched 1 time
+            grid: [2x256]  block: [128]
+             device time(us): total=33 max=33 min=33 avg=33
+            elapsed time(us): total=490 max=490 min=490 avg=490
+    62: data region reached 4 times
+        62: data copyin transfers: 2
+             device time(us): total=83 max=74 min=9 avg=41
+        81: data copyout transfers: 2
+             device time(us): total=148 max=79 min=69 avg=74
+512 	   0.1932 seconds 
+
+Accelerator Kernel Timing data
+/projectnb/paralg/pdillon/project/2D-image/gpu/main.c
+  main  NVIDIA  devicenum=0
+    time(us): 805
+    62: compute region reached 1 time
+        67: kernel launched 1 time
+            grid: [4x512]  block: [128]
+             device time(us): total=113 max=113 min=113 avg=113
+            elapsed time(us): total=484 max=484 min=484 avg=484
+    62: data region reached 4 times
+        62: data copyin transfers: 2
+             device time(us): total=204 max=195 min=9 avg=102
+        81: data copyout transfers: 2
+             device time(us): total=488 max=315 min=173 avg=244
+1024 	   0.2387 seconds 
+
+Accelerator Kernel Timing data
+/projectnb/paralg/pdillon/project/2D-image/gpu/main.c
+  main  NVIDIA  devicenum=0
+    time(us): 3,174
+    62: compute region reached 1 time
+        67: kernel launched 1 time
+            grid: [8x1024]  block: [128]
+             device time(us): total=446 max=446 min=446 avg=446
+            elapsed time(us): total=507 max=507 min=507 avg=507
+    62: data region reached 4 times
+        62: data copyin transfers: 2
+             device time(us): total=845 max=836 min=9 avg=422
+        81: data copyout transfers: 2
+             device time(us): total=1,883 max=946 min=937 avg=941
+2048 	   0.2097 seconds 
+
+Accelerator Kernel Timing data
+/projectnb/paralg/pdillon/project/2D-image/gpu/main.c
+  main  NVIDIA  devicenum=0
+    time(us): 12,539
+    62: compute region reached 1 time
+        67: kernel launched 1 time
+            grid: [16x2048]  block: [128]
+             device time(us): total=1,772 max=1,772 min=1,772 avg=1,772
+            elapsed time(us): total=1,828 max=1,828 min=1,828 avg=1,828
+    62: data region reached 4 times
+        62: data copyin transfers: 2
+             device time(us): total=3,297 max=3,289 min=8 avg=1,648
+        81: data copyout transfers: 4
+             device time(us): total=7,470 max=3,715 min=21 avg=1,867
+2048 	   0.2280 seconds 
+
+Accelerator Kernel Timing data
+/projectnb/paralg/pdillon/project/2D-image/gpu/main.c
+  main  NVIDIA  devicenum=0
+    time(us): 12,528
+    62: compute region reached 1 time
+        67: kernel launched 1 time
+            grid: [16x2048]  block: [128]
+             device time(us): total=1,773 max=1,773 min=1,773 avg=1,773
+            elapsed time(us): total=1,830 max=1,830 min=1,830 avg=1,830
+    62: data region reached 4 times
+        62: data copyin transfers: 2
+             device time(us): total=3,288 max=3,280 min=8 avg=1,644
+        81: data copyout transfers: 4
+             device time(us): total=7,467 max=3,710 min=22 avg=1,866
+2048 	   0.2124 seconds 
+
+Accelerator Kernel Timing data
+/projectnb/paralg/pdillon/project/2D-image/gpu/main.c
+  main  NVIDIA  devicenum=0
+    time(us): 12,525
+    62: compute region reached 1 time
+        67: kernel launched 1 time
+            grid: [16x2048]  block: [128]
+             device time(us): total=1,775 max=1,775 min=1,775 avg=1,775
+            elapsed time(us): total=1,831 max=1,831 min=1,831 avg=1,831
+    62: data region reached 4 times
+        62: data copyin transfers: 2
+             device time(us): total=3,288 max=3,280 min=8 avg=1,644
+        81: data copyout transfers: 4
+             device time(us): total=7,462 max=3,707 min=22 avg=1,865
+8192 	   0.5332 seconds 
+
+Accelerator Kernel Timing data
+/projectnb/paralg/pdillon/project/2D-image/gpu/main.c
+  main  NVIDIA  devicenum=0
+    time(us): 155,589
+    62: compute region reached 1 time
+        67: kernel launched 1 time
+            grid: [64x512]  block: [128]
+             device time(us): total=28,643 max=28,643 min=28,643 avg=28,643
+            elapsed time(us): total=28,701 max=28,701 min=28,701 avg=28,701
+    62: data region reached 4 times
+        62: data copyin transfers: 17
+             device time(us): total=45,016 max=2,818 min=8 avg=2,648
+        81: data copyout transfers: 34
+             device time(us): total=81,930 max=2,605 min=26 avg=2,409
+16384 	   1.6193 seconds 
+
+Accelerator Kernel Timing data
+/projectnb/paralg/pdillon/project/2D-image/gpu/main.c
+  main  NVIDIA  devicenum=0
+    time(us): 624,975
+    62: compute region reached 1 time
+        67: kernel launched 1 time
+            grid: [128x256]  block: [128]
+             device time(us): total=117,396 max=117,396 min=117,396 avg=117,396
+            elapsed time(us): total=117,458 max=117,458 min=117,458 avg=117,458
+    62: data region reached 4 times
+        62: data copyin transfers: 65
+             device time(us): total=180,011 max=2,820 min=8 avg=2,769
+        81: data copyout transfers: 130
+             device time(us): total=327,568 max=2,607 min=23 avg=2,519
