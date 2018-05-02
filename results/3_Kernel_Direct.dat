@@ -1,0 +1,13 @@
+N          GPU 3           		MultiCore3		Serial 3
+---     --------------		--------------		--------------
+16 	   0.2790 seconds		0.0086 seconds 		0.0000 seconds
+32 	   0.2742 seconds 		0.0086 seconds		0.0000 seconds
+64 	   0.2753 seconds 		0.0085 seconds 		0.0001 seconds
+128    0.2746 seconds 		0.0084 seconds 		0.0004 seconds
+256    0.2745 seconds 		0.0085 seconds 		0.0014 seconds
+512    0.2740 seconds 		0.0085 seconds		0.0052 seconds 
+1024   0.2780 seconds 		0.0089 seconds		0.0225 seconds
+2048   0.2858 seconds 		0.0102 seconds		0.0862 seconds
+4096   0.3157 seconds 		0.0182 seconds		0.3262 seconds 
+8192   0.4031 seconds 		0.0458 seconds 		1.3472 seconds
+16384  0.7649 seconds  		0.1583 seconds 		4.3467 seconds
