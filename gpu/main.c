@@ -11,8 +11,8 @@
 #include "lodepng.h"
 
 
-#define filter_N 256
-#define IMAGE_N 256
+#define filter_N 16
+#define IMAGE_N 16384
 
 double get_time() {
     struct timeval tv;

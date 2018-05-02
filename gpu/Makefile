@@ -1,4 +1,4 @@
-COMPILER ?= PGI-tesla
+COMPILER ?= GCC
 CC = pgcc
 CFLAGS = -DUSE_DOUBLE
 OBJS = main.o lodepng.o 
